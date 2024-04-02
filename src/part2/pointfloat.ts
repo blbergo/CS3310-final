@@ -5,22 +5,28 @@ import { isDigit } from "./utils";
  *
  * @param {String} expression - The expression to evaluate
  * @param {number} pos - The position to start the evaluation
- * @returns
+ * @returns {boolean} true if the expression is a point float, false otherwise
  */
 export const isPointFloat = (
   expression: String,
   pos: number,
   state: boolean,
 ): boolean => {
-  while (pos < expression.length && isDigit(expression.charAt(pos))) {
+  const inBounds = pos < expression.length;
+  const isSeparator = expression.charAt(pos) === "_";
+
+  while (inBounds && isDigit(expression.charAt(pos))) {
     pos++;
   }
 
-  if (pos < expression.length && expression.charAt(pos) === ".") {
-    if (
+  const isDecimal = pos < expression.length && expression.charAt(pos) === ".";
+  if (isDecimal) {
+    const hasInvalidChar =
       pos + 1 < expression.length &&
-      (expression.charAt(pos + 1) === "_" || expression.charAt(pos + 1) === ".")
-    ) {
+      (expression.charAt(pos + 1) === "_" ||
+        expression.charAt(pos + 1) === ".");
+
+    if (hasInvalidChar) {
       return false;
     }
 
@@ -28,7 +34,9 @@ export const isPointFloat = (
     pos++;
     while (pos < expression.length) {
       if (!isDigit(expression.charAt(pos))) {
-        if (pos < expression.length - 1 && expression.charAt(pos) === "_") {
+        const isValidSeparator =
+          pos < expression.length - 1 && expression.charAt(pos) === "_";
+        if (isValidSeparator) {
           return isPointFloat(expression, pos + 1, state);
         } else {
           return false;
@@ -36,7 +44,7 @@ export const isPointFloat = (
       }
       pos++;
     }
-  } else if (expression.charAt(pos) === "_") {
+  } else if (isSeparator) {
     // This is how we handle star
     return isPointFloat(expression, pos + 1, state);
   }

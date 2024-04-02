@@ -13,6 +13,12 @@ const TEST_FLOATS = {
   "1_1e1234.3": false,
   asdf: false,
   "1_": false,
+  "1.1_": false,
+  "1E100": true,
+  "1E-100": true,
+  "3.14E-10": true,
+  "3.14e+-0": false,
+  "-3.14": false,
 };
 
 console.log("Running tests...");
@@ -30,4 +36,8 @@ for (const [expression, expected] of Object.entries(TEST_FLOATS)) {
   }
 }
 
-console.log(chalk.blueBright(`Tests completed with ${count} failures`));
+console.log(
+  chalk.blueBright(
+    `Passed ${Object.keys(TEST_FLOATS).length - count}/${Object.keys(TEST_FLOATS).length} tests`,
+  ),
+);
