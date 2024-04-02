@@ -5,9 +5,9 @@ import { isDigit } from "./utils";
  *
  * @param {String} expression - The expression to evaluate
  * @param {number} pos - The position to start the evaluation
- * @returns
+ * @returns {boolean}
  */
-export const isPointFloat = (
+export const isExponentFloat = (
   expression: String,
   pos: number,
   state: boolean,
@@ -18,27 +18,30 @@ export const isPointFloat = (
 
   if (pos < expression.length && expression.charAt(pos) === ".") {
     if (
-      pos + 1 < expression.length &&
-      (expression.charAt(pos + 1) === "_" || expression.charAt(pos + 1) === ".")
+      (pos + 1 < expression.length &&
+        (expression.charAt(pos + 1) === "_" ||
+          expression.charAt(pos + 1) === ".")) ||
+      state
     ) {
       return false;
     }
 
-    state = true;
     pos++;
-    while (pos < expression.length) {
+    while (pos < expression.length - 1) {
       if (!isDigit(expression.charAt(pos))) {
-        if (pos < expression.length - 1 && expression.charAt(pos) === "_") {
-          return isPointFloat(expression, pos + 1, state);
-        } else {
-          return false;
+        if (expression.charAt(pos) === "_") {
+          return isExponentFloat(expression, pos + 1, state);
+        } else if (expression.charAt(pos) === "e" && !state) {
+          return isExponentFloat(expression, pos + 1, true);
         }
       }
       pos++;
     }
   } else if (expression.charAt(pos) === "_") {
     // This is how we handle star
-    return isPointFloat(expression, pos + 1, state);
+    return isExponentFloat(expression, pos + 1, state);
+  } else if (expression.charAt(pos) === "e" && !state) {
+    return isExponentFloat(expression, pos + 1, true);
   }
 
   return state;
