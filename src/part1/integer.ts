@@ -1,9 +1,15 @@
 import { isNum, isHex, isOctal } from "./checkInt";
 
-export const integerLiterals = (s: string) => {
-  let isNew,
-    state,
-    iZero = false;
+/**
+ * Function that determines if a string is either a valid decimal, hex, or octal integer
+ * @param {String} s sequence of characters to evaluate
+ * @returns {Boolean} true if s is an integer, false otherwise
+ */
+
+export const integerLiterals = (s: string): boolean => {
+  let iZero,
+    isNew,
+    state = false;
   let starting = true;
 
   if (s[0] === "_") return false;
@@ -32,7 +38,13 @@ export const integerLiterals = (s: string) => {
   return state;
 };
 
-const parseHex = (s: string) => {
+/**
+ * Helper function to determine if a character is a valid hex integer
+ * @param {String} s character to evaluate
+ * @returns {Boolean} true if s is a valid hex integer, false otherwise
+ */
+
+const parseHex = (s: string): boolean => {
   let state = false;
 
   for (let i = 0; i < s.length; i++) {
@@ -43,7 +55,13 @@ const parseHex = (s: string) => {
   return state;
 };
 
-const parseOctal = (s: string) => {
+/**
+ * Helper function to determine if a character is a valid octal integer
+ * @param {String} s character to evaluate
+ * @returns {Boolean} true if s is a valid octal integer, false otherwise
+ */
+
+const parseOctal = (s: string): boolean => {
   let state = false;
 
   for (let i = 0; i < s.length; i++) {

@@ -1,6 +1,7 @@
 import * as readline from "node:readline";
 import { integerLiterals } from "./integer";
 
+// Create an interface to read lines from the stdin
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
