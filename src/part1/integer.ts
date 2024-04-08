@@ -8,8 +8,8 @@ export const integerLiterals = (s: string) => {
 
   if (s[0] === "_") return false;
   if (s.length >= 2 && s[0] === "0") {
-    if (s[1] === "x") return parseHex(s.slice(2));
-    else if (s[1] === "o") return parseOctal(s.slice(2));
+    if (s[1].toLowerCase() === "x") return parseHex(s.slice(2));
+    else if (s[1].toLowerCase() === "o") return parseOctal(s.slice(2));
   }
 
   for (let i = 0; i < s.length; i++) {

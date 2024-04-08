@@ -6,15 +6,8 @@ export const isNum = (c: string) => {
 };
 
 export const isHex = (c: string) => {
-  if (
-    isNum(c) ||
-    c === "a" ||
-    c === "b" ||
-    c === "c" ||
-    c === "d" ||
-    c === "e" ||
-    c === "f"
-  ) {
+  let reg = /[0-9a-fA-F]/;
+  if (c.match(reg)) {
     return true;
   }
   return false;
