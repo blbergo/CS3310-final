@@ -9,15 +9,13 @@ const integers = {
   "0x_Abd_Ef9_301304": true,
   "0Xdeadbeef": true,
   "0o_1234567": true,
+  x0319348: false,
 };
 
 console.log("Running tests for integer literals...\n");
 for (const [key, value] of Object.entries(integers)) {
   console.log(`Testing: ${key}, expecting: ${value}\n`);
   console.log(`Result: ${integerLiterals(key)}\n`);
-  console.assert(
-    value === integerLiterals(key),
-    "Failed to parse integer literal\n",
-  );
+  console.assert(value === integerLiterals(key), "Test incorrect\n");
 }
 console.log("All tests complete.\n");

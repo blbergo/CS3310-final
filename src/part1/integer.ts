@@ -2,6 +2,7 @@ import { isNum, isHex, isOctal } from "./checkInt";
 
 /**
  * Function that determines if a string is either a valid decimal, hex, or octal integer
+ * Mimics the behavior of an NFA by parsing and evaluating the string character by character
  * @param {String} s sequence of characters to evaluate
  * @returns {Boolean} true if s is an integer, false otherwise
  */
@@ -9,33 +10,42 @@ import { isNum, isHex, isOctal } from "./checkInt";
 export const integerLiterals = (s: string): boolean => {
   let iZero,
     isNew,
-    state = false;
+    startsZero,
+    accepting = false;
   let starting = true;
 
-  if (s[0] === "_") return false;
-  if (s.length >= 2 && s[0] === "0") {
-    if (s[1].toLowerCase() === "x") return parseHex(s.slice(2));
-    else if (s[1].toLowerCase() === "o") return parseOctal(s.slice(2));
-  }
-
   for (let i = 0; i < s.length; i++) {
-    if (!isNum(s[i]) && s[i] !== "_") return false;
+    if (starting) {
+      if (s[i] === "0") {
+        startsZero = true;
+        iZero = true;
+      } else if (s[i] === "_") return false;
+      else if (!isNum(s[i])) return false;
+      starting = false;
+    } else if (startsZero && i == 1) {
+      if (s[i].toLowerCase() === "x") {
+        return parseHex(s.slice(i + 1));
+      } else if (s[i].toLowerCase() === "o") {
+        return parseOctal(s.slice(i + 1));
+      }
+    } else if (!isNum(s[i]) && s[i] !== "_") return false;
     else if (s[i] === "_") {
-      state = false;
+      if (isNew) return false;
+      accepting = false;
       isNew = true;
+      iZero = false;
     } else if (s[i] === "0") {
       if (isNew || starting) iZero = true;
-      else iZero = false;
       isNew = false;
-      state = true;
+      accepting = true;
     } else if (iZero) return false;
     else {
-      state = true;
+      accepting = true;
       isNew = false;
     }
     starting = false;
   }
-  return state;
+  return accepting;
 };
 
 /**
