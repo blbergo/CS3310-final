@@ -7,6 +7,8 @@
     "prepare": "husky",
     "clean": "prettier --write ./",
     "build": "tsc",
+    "start:part1": "npx ts-node ./src/part1/index.ts",
+    "test:part1": "npx ts-node ./src/test/part1.test.ts",
     "start:part2": "npx ts-node ./src/part2/index.ts",
     "test:part2": "npx ts-node ./src/test/part2.test.ts"
   },
@@ -17,7 +19,8 @@
     "husky": "9.0.11",
     "nodemon": "3.1.0",
     "prettier": "3.2.5",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "ts-node": "10.9.2"
   },
   "devDependencies": {
     "@types/node": "^20.12.2"

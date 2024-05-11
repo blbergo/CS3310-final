@@ -6,20 +6,40 @@
 # Get Started
 
 - Install [Node.js](https://nodejs.org/en)
-- Install dependencies with the following command:
+
+Install dependencies with the following command:
 
 ```shell
 npm install
 ```
 
-Run the program:
+The program is divided into 2 parts; Part 1 and Part 2 as described in the assignment respectively.
+To run each part, use the following commands:
+
+For part 1:
 
 ```shell
-npm run start
+npm run start:part1
 ```
 
-Run the program in development mode:
+For part 2:
 
 ```shell
-npm run dev
+npm run start:part2
+```
+
+# Test Cases
+
+To run the test cases we used for each part, run the following commands:
+
+For part 1:
+
+```shell
+npm run test:part1
+```
+
+For part 2:
+
+```shell
+npm run test:part2
 ```
