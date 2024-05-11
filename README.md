@@ -1,6 +1,6 @@
 # Node Knows Best CS3310 Group Project
 
-- Yousseff Z. - part 1
+- Youssef Z. - part 1
 - Bryan B. - part 2
 
 # Get Started
