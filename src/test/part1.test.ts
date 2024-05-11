@@ -1,4 +1,4 @@
-import { integerLiterals } from "./integer";
+import { integerLiterals } from "../part1/integer";
 
 // Dummy integer literals
 const integers = {
